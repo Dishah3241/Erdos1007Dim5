@@ -21,6 +21,8 @@ project:
     ℝ⁵ but not in ℝ⁴. K1,3,3 has dimension five by Theorem 8: it has an explicit placement in ℝ⁵,
     and an orthogonal-complement count rules out ℝ⁴. The supporting results are in GraphDimension,
     a separate Lean library on the dimension of graphs, which this repository pins by revision.
+    The question belongs to discrete geometry and extremal graph theory, specifically the study of
+    unit-distance representations and the dimension of graphs.
   authors:                 # humans only; credit models under `automation`
     - "Dishant Shah"
   responsible_maintainers:

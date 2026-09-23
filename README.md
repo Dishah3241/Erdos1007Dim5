@@ -27,7 +27,8 @@ that uniqueness. `formal-conjectures` also records the next case, dimension five
 Noble settled. Write `f(d)` for the least number of edges of a graph with no unit-distance
 representation in `ℝᵈ`. Since `K_{d+2}` has none, `f(d) ≤ C(d + 2, 2)`, and Frankl, Kupavskii and
 Swanepoel proved equality for every `d ≥ 4`. At `d = 4` that is fifteen, the bound proved here,
-which Chaffee and Noble proved first.
+which Chaffee and Noble proved first. The question belongs to discrete geometry and extremal graph theory, and
+specifically to the study of unit-distance representations and the dimension of graphs.
 
 ## The statements
 
