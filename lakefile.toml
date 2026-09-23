@@ -33,7 +33,7 @@ warningAsError = true
 [[require]]
 name = "mathlib"
 scope = "leanprover-community"
-rev = "v4.33.1"
+rev = "v4.35.0-rc2"
 
 # This glob is AUTHORITATIVE for what is built and audited: every `Erdos1007Dim5/*.lean` compiles
 # directly and the audits enumerate the source tree, so an orphaned module still fails the build.
@@ -101,7 +101,7 @@ root = "scripts.Layering"
 [[require]]
 name = "GraphDimension"
 git = "https://github.com/Dishah3241/GraphDimension"
-rev = "05da2520de4752817cc5b19e92f4237e843af343"
+rev = "40d6dbca09967a47fe0c06034cf0a7c70c93a003"
 
 [[require]]
 name = "checkdecls"

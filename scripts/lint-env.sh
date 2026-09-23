@@ -42,7 +42,7 @@ MARKER="LINTENV-DRIVER-COMPLETE-$NONCE"
 # adds or removes a linter fails loudly here rather than silently reducing coverage.
 # When that happens, update this list and triage the new linter's findings -- do not delete
 # the guard.
-LINTERS="checkType defsWithUnderscore deprecatedNoSince impossibleInstance nonClassInstance simpComm simpNF structureInType subsetDotNotationLinter synTaut tacticDocs unusedArguments unusedHavesSuffices"
+LINTERS="checkType defsWithUnderscore deprecatedNoSince impossibleInstance nonClassInstance simpComm simpNF structureInType subsetDotNotationLinter synTaut tacticAlt tacticDocs unusedArguments unusedHavesSuffices"
 LINTERS_LEAN=$(printf '"%s", ' $LINTERS | sed 's/, $//')
 
 MODULE_LIST="$TMP/modules.txt"
