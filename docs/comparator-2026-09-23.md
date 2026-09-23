@@ -3,9 +3,9 @@
 Comparator checks that `Solution.lean` proves exactly the statement in `Challenge.lean`, with only the
 permitted axioms. It then replays the proof through two independent kernels.
 
-- **Tree:** commit `6ecd9d2`. `GraphDimension` is a git dependency pinned to
-  `2e798b7281bf44ae7fdc65fa50039e7cd2973a44`. An earlier run, on the local path dependency at `3e4964d`, gave the
-  same result.
+- **Tree:** commit `51d13d9`. `GraphDimension` is a git dependency pinned to
+  `05da2520de4752817cc5b19e92f4237e843af343`, after the `HasUnitDistDim` rename (finding A34). Earlier runs, on
+  `6ecd9d2` (pinned at `2e798b7`) and `3e4964d` (the local path dependency), gave the same result.
 - **`comparator.json`:**
   - target `Erdos1007Dim5.Palomar.target`: the conjunction of `dimension_five` and `dimension_five_extremal`
   - permitted axioms `propext`, `Quot.sound`, `Classical.choice`
