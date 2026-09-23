@@ -43,3 +43,27 @@ COMPARATOR_LEAN4EXPORT=~/src/comparator/.lake/packages/lean4export/.lake/build/b
 COMPARATOR_NANODA=~/src/nanoda_lib/target/release/nanoda_bin \
   lake env ~/src/comparator/.lake/build/bin/comparator comparator.json
 ```
+
+## On Lean v4.35.0-rc2
+
+Palomar now judges with the toolchain's own `lake comparator` and requires Lean `v4.35.0-rc2` or later
+(`docs/palomar-2026-09-23.md`). After the port (commit `67ee342`, with `GraphDimension` at
+`40d6dbca09967a47fe0c06034cf0a7c70c93a003`), `lake comparator` accepts the solution under both kernels:
+
+```text
+Building Challenge … Build completed successfully (2430 jobs).
+Exporting … Erdos1007Dim5.Palomar.target … from Challenge
+Building Solution … Build completed successfully (2814 jobs).
+Running nanoda kernel on solution
+nanoda kernel accepts the solution
+Running Lean default kernel on solution
+Lean default kernel accepts the solution
+Your solution is okay!
+```
+
+The run used no sandbox: `lake comparator` requires `bwrap`, which needs Linux. This checks the
+mathematics, not isolation. Palomar and the `Palomar preflight` workflow run it sandboxed.
+
+```sh
+PATH="$HOME/src/nanoda_lib/target/release:$PATH" lake comparator --config comparator.json --inadvisably-no-sandbox
+```
