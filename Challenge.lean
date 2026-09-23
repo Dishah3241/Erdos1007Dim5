@@ -81,8 +81,8 @@ def UnitDistanceEmbeddable.separating : Prop :=
 /-- `G` has dimension `n`: the least `m` admitting a unit-distance representation of `G` in `ℝᵐ`.
 
 `IsLeast` carries both halves — `G` is representable in `ℝⁿ`, and in no smaller space. Weakening
-this to mere representability in `ℝ⁵` would make the claims below false: the single edge `K₂` is
-representable in `ℝ⁵`, so the least edge count would be one, not fifteen. -/
+this to mere representability in `ℝ⁵` would make the claims below false: a graph with no edges is
+representable in `ℝ⁵`, so the least edge count would be zero, not fifteen. -/
 def HasDimension {V : Type*} (G : SimpleGraph V) (n : ℕ) : Prop :=
   IsLeast {m | UnitDistanceEmbeddable G m} n
 
