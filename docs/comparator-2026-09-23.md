@@ -3,7 +3,9 @@
 Comparator checks that `Solution.lean` proves exactly the statement in `Challenge.lean`, with only the
 permitted axioms. It then replays the proof through two independent kernels.
 
-- **Tree:** commit `af9c6a9`, whose `Solution` imports the local `GraphDimension` at `2e798b7`.
+- **Tree:** commit `6ecd9d2`. `GraphDimension` is a git dependency pinned to
+  `2e798b7281bf44ae7fdc65fa50039e7cd2973a44`. An earlier run, on the local path dependency at `3e4964d`, gave the
+  same result.
 - **`comparator.json`:**
   - target `Erdos1007Dim5.Palomar.target`: the conjunction of `dimension_five` and `dimension_five_extremal`
   - permitted axioms `propext`, `Quot.sound`, `Classical.choice`
@@ -14,8 +16,6 @@ permitted axioms. It then replays the proof through two independent kernels.
   - NanoDa `3a24072`
 - **Sandbox:** none. The run used `fake-landrun.sh`, because landrun is Linux-only. This checks the mathematics,
   not isolation; Palomar re-runs it sandboxed.
-- **Before publishing:** `GraphDimension` must become a git dependency pinned to a 40-character revision, and
-  Comparator must run again on that tree.
 
 ## Result
 
