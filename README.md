@@ -15,7 +15,7 @@ dimension five has at least fifteen edges, and both `K₆` and `K₁,₃,₃` ha
 | Comparator | accepted by Lean's kernel and by NanoDa ([record](docs/comparator-2026-09-23.md)) |
 | Library | [GraphDimension](https://github.com/Dishah3241/GraphDimension), which Lake fetches at the revision pinned in `lake-manifest.json` |
 | Review | an independent, read-only review found nothing that blocks the proof ([record](docs/review-2026-09-23.md)) |
-| Blueprint | `blueprint/src/content.tex`, checked against the Lean by `leanblueprint checkdecls` in CI |
+| Blueprint | [web](https://dishah3241.github.io/Erdos1007Dim5/) and [PDF](https://dishah3241.github.io/Erdos1007Dim5/blueprint.pdf), built by CI from `blueprint/src/content.tex` and checked against the Lean by `leanblueprint checkdecls` |
 | `formal-conjectures` link | not yet proposed |
 | Palomar entry | not yet submitted |
 
@@ -100,7 +100,8 @@ table says otherwise:
 Step 4 is `DimensionFive.proof` and `DimensionFiveExtremal.proof`, in namespace
 `Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5`. The library's `UnitDistEmbeddable` and
 `HasUnitDistDim` have the same bodies as the inlined definitions, and `unitDistanceEmbeddable_iff`
-and `hasDimension_iff` connect them. The blueprint lays out the same steps as a dependency graph.
+and `hasDimension_iff` connect them. The [blueprint](https://dishah3241.github.io/Erdos1007Dim5/)
+lays out the same steps as a dependency graph.
 
 ## Checking it
 
