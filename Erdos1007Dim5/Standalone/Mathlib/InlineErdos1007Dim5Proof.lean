@@ -31,7 +31,7 @@ explicit exception to the standalone isolation rule.
 
 The bridge to the graph-dimension definitions is `Iff.rfl` in both directions of meaning:
 `UnitDistanceEmbeddable` and `HasDimension` are the statement module's spellings of
-`SimpleGraph.UnitDistEmbeddable` and `SimpleGraph.HasDimension`. On it stand the extremal
+`SimpleGraph.UnitDistEmbeddable` and `SimpleGraph.HasUnitDistDim`. On it stand the extremal
 attainment — `K₆` and `K₁,₃,₃` each of dimension five with fifteen edges — its satisfiability
 witness, the separating examples, and the lower bound: a graph with at most fourteen edges has a
 unit-distance representation in `ℝ⁴`, so fifteen is the least number of edges of a graph of
@@ -51,10 +51,10 @@ theorem unitDistanceEmbeddable_iff {V : Type*} (G : SimpleGraph V) (n : ℕ) :
     UnitDistanceEmbeddable G n ↔ G.UnitDistEmbeddable n := Iff.rfl
 
 /-- The statement module's `HasDimension` is the graph-dimension library's
-`SimpleGraph.HasDimension`: the two definitions differ in binder names only, so the bridge is
+`SimpleGraph.HasUnitDistDim`: the two definitions differ in binder names only, so the bridge is
 `Iff.rfl`. -/
 theorem hasDimension_iff {V : Type*} (G : SimpleGraph V) (n : ℕ) :
-    HasDimension G n ↔ G.HasDimension n := Iff.rfl
+    HasDimension G n ↔ G.HasUnitDistDim n := Iff.rfl
 
 /-- `K₂` plus an isolated vertex, placed in `ℝ¹`, has a non-edge at distance one. -/
 theorem UnitDistanceEmbeddable.separating.proof : UnitDistanceEmbeddable.separating := by
@@ -137,7 +137,7 @@ theorem K133_edgeSet_ncard : K133.edgeSet.ncard = 15 := by
 /-- Fifteen is attained: `K₆` has dimension five and fifteen edges. -/
 theorem DimensionFive.witness.proof : DimensionFive.witness :=
   ⟨6, SimpleGraph.completeGraph (Fin 6),
-    (hasDimension_iff _ _).mp (hasDimension_completeGraph 6), completeGraph_six_edgeSet_ncard⟩
+    (hasDimension_iff _ _).mp (hasUnitDistDim_completeGraph 6), completeGraph_six_edgeSet_ncard⟩
 
 /-- **Erdős problem 1007, dimension five.** The least number of edges of a graph of dimension
 five is fifteen. `K₆` attains fifteen, and every graph with at most fourteen edges has a
@@ -159,8 +159,8 @@ theorem DimensionFive.proof : DimensionFive := by
 dimension five and exactly fifteen edges: the complete-graph dimension of Erdős–Harary–Tutte for
 `K₆`, and Chaffee–Noble Theorem 8 for `K₁,₃,₃`. -/
 theorem DimensionFiveExtremal.proof : DimensionFiveExtremal :=
-  ⟨⟨(hasDimension_iff _ _).mp (hasDimension_completeGraph 6), completeGraph_six_edgeSet_ncard⟩,
-    ⟨(hasDimension_iff _ _).mp hasDimension_K133, K133_edgeSet_ncard⟩⟩
+  ⟨⟨(hasDimension_iff _ _).mp (hasUnitDistDim_completeGraph 6), completeGraph_six_edgeSet_ncard⟩,
+    ⟨(hasDimension_iff _ _).mp hasUnitDistDim_K133, K133_edgeSet_ncard⟩⟩
 
 /-- `K₆` and `K₁,₃,₃` are not even isomorphic: six vertices against seven. -/
 theorem DimensionFiveExtremal.witness.proof : DimensionFiveExtremal.witness := by

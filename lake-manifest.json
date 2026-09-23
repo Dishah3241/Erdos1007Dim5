@@ -7,10 +7,10 @@
    "type": "git",
    "subDir": null,
    "scope": "",
-   "rev": "2e798b7281bf44ae7fdc65fa50039e7cd2973a44",
+   "rev": "05da2520de4752817cc5b19e92f4237e843af343",
    "name": "GraphDimension",
    "manifestFile": "lake-manifest.json",
-   "inputRev": "2e798b7281bf44ae7fdc65fa50039e7cd2973a44",
+   "inputRev": "05da2520de4752817cc5b19e92f4237e843af343",
    "inherited": false,
    "configFile": "lakefile.toml"
   },

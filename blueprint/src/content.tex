@@ -25,7 +25,7 @@
 
 \begin{definition}[Dimension]
   \label{def:dimension}
-  \lean{Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5.HasDimension, SimpleGraph.HasDimension}
+  \lean{Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5.HasDimension, SimpleGraph.HasUnitDistDim}
   \leanok
   \uses{def:representable}
   $\dim(G) = n$ when $n$ is least such that $G$ is representable in $\mathbb{R}^n$.
@@ -55,7 +55,7 @@
 
 \begin{lemma}[$\dim K_n = n - 1$; Chaffee--Noble Lemma 1]
   \label{lem:dim-complete}
-  \lean{EuclideanGeometry.card_le_of_equilateral, SimpleGraph.hasDimension_completeGraph}
+  \lean{EuclideanGeometry.card_le_of_equilateral, SimpleGraph.hasUnitDistDim_completeGraph}
   \leanok
   \uses{def:dimension}
   At most $d + 1$ points of $\mathbb{R}^d$ are pairwise at distance one, and scaled basis vectors
@@ -64,7 +64,7 @@
 
 \begin{lemma}[$\dim (K_n - e) = n - 2$; Chaffee--Noble Lemma 2]
   \label{lem:dim-complete-minus-edge}
-  \lean{SimpleGraph.hasDimension_completeGraph_deleteEdge}
+  \lean{SimpleGraph.hasUnitDistDim_completeGraph_deleteEdge}
   \leanok
   \uses{lem:dim-complete, lem:monotone}
   For $n \ge 3$: two apexes over the remaining $n - 2$ vertices for the upper bound, and
@@ -83,7 +83,7 @@
 
 \begin{theorem}[Chaffee--Noble, Theorem 8]
   \label{thm:k133-dimension}
-  \lean{SimpleGraph.not_unitDistEmbeddable_completeMultipartiteGraph_one_three_three, SimpleGraph.unitDistEmbeddable_completeMultipartiteGraph_one_three_three, SimpleGraph.hasDimension_K133}
+  \lean{SimpleGraph.not_unitDistEmbeddable_completeMultipartiteGraph_one_three_three, SimpleGraph.unitDistEmbeddable_completeMultipartiteGraph_one_three_three, SimpleGraph.hasUnitDistDim_K133}
   \leanok
   \uses{lem:monotone}
   $K_{1,3,3}$ has no representation in $\mathbb{R}^4$ and has one in $\mathbb{R}^5$. The lower
@@ -95,7 +95,7 @@
 
 \begin{lemma}[Chaffee--Noble, Lemma 9]
   \label{lem:cocktail}
-  \lean{SimpleGraph.hasDimension_completeMultipartiteGraph_one_two_two_two, SimpleGraph.hasDimension_completeMultipartiteGraph_two_two_two_two}
+  \lean{SimpleGraph.hasUnitDistDim_completeMultipartiteGraph_one_two_two_two, SimpleGraph.hasUnitDistDim_completeMultipartiteGraph_two_two_two_two}
   \leanok
   \uses{lem:k33-lower, lem:monotone}
   $K_{1,2,2,2}$ and $K_{2,2,2,2}$ have dimension four: cross-polytope placements
