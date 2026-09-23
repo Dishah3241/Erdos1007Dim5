@@ -136,8 +136,8 @@ Comparator command is in [`docs/comparator-2026-09-23.md`](docs/comparator-2026-
 
 ## How this was made
 
-AI agents wrote the Lean under the direction of its owner, who chose the problem and approved
-publication. [`formalization.yaml`](formalization.yaml) names every model and harness, phase by
+AI agents wrote the Lean under the direction of its owner, who chose the problem, signed off on
+what the statements mean, and approved publication. [`formalization.yaml`](formalization.yaml) names every model and harness, phase by
 phase:
 
 - **Statement:** GLM-5.3-flash through pi. Grok 4.7, through the Grok CLI, checked it against

@@ -7,9 +7,9 @@ GraphDimension library, is checked by the kernel and the gates.
 The project declarations are in `Erdos1007Dim5/Standalone/Mathlib/InlineErdos1007Dim5.lean`,
 namespace `Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5`. Rows 11 and 12 are Mathlib's.
 
-**Owner sign-off: not yet given.** The owner signs by confirming every row. Any change to a row
-cancels the sign-off.
+**Owner sign-off: confirmed on 2026-09-23 for rows 1–12.** Any change to a row cancels it.
 
+- The owner confirmed the list after row 2's check was corrected at `65018a8`.
 - Rows 1, 2, 8 and 9 name the same upstream definitions and separating examples that the owner
   signed for Erdos1007 on 2026-09-22 (its `docs/compass.md`, rows 1, 2, 5 and 6). Row 2's check
   column is new wording for this target.

@@ -144,8 +144,9 @@ automation:
         change. The briefs live in the private workspace repository.
   spend_usd: "subscription-based usage"
   notes: >-
-    The owner chose the target and approved publishing this repository and the library; the owner
-    wrote no Lean. Every Lean change reached these repositories through a manager that re-ran the
+    The owner chose the target, signed off on what each statement-level declaration must mean
+    (docs/compass.md), and approved publishing this repository and the library; the owner wrote no
+    Lean. Every Lean change reached these repositories through a manager that re-ran the
     kernel checks. The model names above are taken from the run logs with the workspace's
     harness/run-model, and the harness versions from the installed tools, which predate every run.
 
@@ -162,6 +163,7 @@ review:
   reviewers:
     - "grok-4.7-build (Grok CLI): independent check of the statements against upstream, by rfl"
     - "claude-opus-5-5 (Claude Code): independent review of the proof"
+    - "Dishant Shah: sign-off on the meaning of the statement-level declarations"
   notes: >-
     Kernel-checked from a fresh clone of this repository, with the library fetched from GitHub at
     its pinned revision: lake build with warnings as errors; lake exe axioms (only propext,
