@@ -117,6 +117,13 @@ automation:
         and a Cursor worker proved dimension_five from Theorem 10. Cursor reports its model by the
         display name given above. Five other runs contributed nothing: two Grok runs that failed on
         an exhausted balance, the two race losers, and a Cursor run stopped by mistake.
+        Runs (model from each run log): library seed 20260922-214004-e2bda678 (Grok);
+        equilateral bound and dim K_n 20260922-220028-bfab1bd2 (Grok); Corollary 5 and the Mathlib
+        bridge 20260922-220028-6e4d1250 (pi); dim(K_n - e) 20260922-224422-1fb6fac1 (pi); extend
+        20260922-225301-ae88a951 (Cursor); Lemma 9 20260922-224534-a6fbfc37 (pi); Theorem 8
+        20260922-231753-6b899e34 (Cursor); the seven-vertex case 20260922-234536-95f7ecae (pi);
+        Theorem 10 20260923-011341-1a5f11e6 (Cursor); attainment 20260922-234536-c993d3b7 (pi);
+        dimension_five 20260923-014405-6bb3987e (Cursor).
       cost:
         wall_time: "about four and a half hours, overnight from 2026-09-22 to 2026-09-23"
         hardware: "one Mac mini; hosted models on subscription plans"
