@@ -16,8 +16,8 @@ dimension five has at least fifteen edges, and both `K₆` and `K₁,₃,₃` ha
 | Library | [GraphDimension](https://github.com/Dishah3241/GraphDimension), which Lake fetches at the revision pinned in `lake-manifest.json` |
 | Review | an independent, read-only review found nothing that blocks the proof ([record](docs/review-2026-09-23.md)) |
 | Blueprint | [web](https://dishah3241.github.io/Erdos1007Dim5/) and [PDF](https://dishah3241.github.io/Erdos1007Dim5/blueprint.pdf), built by CI from `blueprint/src/content.tex` and checked against the Lean by `leanblueprint checkdecls` |
-| `formal-conjectures` link | not yet proposed |
-| Palomar entry | not yet submitted |
+| `formal-conjectures` link | issue [#6519](https://github.com/google-deepmind/formal-conjectures/issues/6519) open; the pull request is prepared and held |
+| Palomar entry | submitted 2026-09-23 at `7118d68`; changes required, because Palomar now needs Lean `v4.35.0-rc2` or later and this repository pins `v4.33.1` ([record](docs/palomar-2026-09-23.md)) |
 
 ## Context
 
