@@ -26,7 +26,7 @@ private structure AuditConfig where
 
 private def defaultConfig : AuditConfig where
   moduleName := `Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5
-  root := `Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5.SmallPrimesCoprime
+  root := `Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5.DimensionFiveExtremal
 
 private def AuditConfig.privatePrefix (config : AuditConfig) : Name :=
   ("_private." ++ config.moduleName.toString).toName

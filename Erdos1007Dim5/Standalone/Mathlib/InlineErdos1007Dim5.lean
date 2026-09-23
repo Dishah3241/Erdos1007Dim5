@@ -5,87 +5,157 @@ Authors: Dishant Shah
 -/
 module
 
-public import Mathlib.Data.Nat.GCD.Basic
-public import Mathlib.Data.Finset.Card
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Combinatorics.SimpleGraph.Maps
 
 /-!
 # Erdős 1007, dimension five: fifteen edges, attained by K6 and K1,3,3
 
-The Mathlib-only statement source. `Challenge.lean` is **generated** from this file: everything
-above the closing proof-link note, concatenated with `scripts/palomar-challenge-footer.txt`.
-Regenerate with `scripts/check-palomar-challenge.sh --update`, and CI fails when the two diverge.
-Drift is therefore impossible by construction rather than by discipline.
+A graph has *dimension* `n` when `n` is least such that its vertices can be placed injectively in
+`ℝⁿ` with every edge realised as a unit segment. Chaffee and Noble proved that a graph of
+dimension five has at least fifteen edges, and that fifteen is attained by both `K₆` and `K₁,₃,₃`.
+This file states both halves.
 
-Consequences to respect:
+`Challenge.lean` is generated from this file; see `AGENTS.md`. Everything here rests on Mathlib
+alone, so a reader can check the statement without following a definition elsewhere.
 
-* this file imports **only Mathlib**, because `Challenge.lean` inherits its imports and Palomar
-  requires that isolation;
-* it declares propositions and contains no proofs — `InlineErdos1007Dim5Proof` proves them;
-* a mathematician must be able to read it alone, so inline the relevant predicate rather than
-  naming one declared elsewhere;
-* every closed proposition carries a `.witness`, every non-dependent hypothesis of one carries
-  a `.drop<Tag>`, and every definition a `.separating`, checked by `lake exe fidelity`.
+## Source
 
-The content below is a worked illustration, to be replaced by the target during Stage 1. The
-mathematics is deliberately trivial; the shape of the declarations is the point.
+The statements are the `erdos_1007.variants.dimension_five` and
+`erdos_1007.variants.dimension_five_extremal` declarations of
+[google-deepmind/formal-conjectures][fc], reproduced with their definitions inlined and no change
+of meaning, together with the source's `K133`. The proof of record is Chaffee and Noble,
+*Dimension 4 and dimension 5 graphs with minimum edge set*, Australas. J. Combin. **64(2)** (2016),
+327–333, Theorem 8, Lemma 9 and Theorem 10.
+
+[fc]: https://github.com/google-deepmind/formal-conjectures
 -/
 
 @[expose] public section
 
 namespace Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5
 
-/-- Every two distinct elements of `S` are coprime. -/
-def PairwiseCoprime (S : Finset ℕ) : Prop :=
-  ∀ a ∈ S, ∀ b ∈ S, a ≠ b → Nat.Coprime a b
+open scoped RealInnerProductSpace
 
-/-- Separating example for `PairwiseCoprime`, required by `lake exe fidelity`.
+/-- The complete tripartite graph $K_{1,3,3}$.
 
-The nearest plausible wrong definition is distinctness: elements merely pairwise different. This
-asserts a set that is pairwise distinct and not pairwise coprime, separating the two notions
-rather than respelling one. Without it a development could be about distinctness throughout,
-because no other check inspects what a definition means. -/
-def PairwiseCoprime.separating : Prop :=
-  ∃ S : Finset ℕ, (∀ a ∈ S, ∀ b ∈ S, a ≠ b → a ≠ b) ∧ ¬ PairwiseCoprime S
+Reproduced verbatim from the source statement, up to namespacing. The vertices are the dependent
+sum of the three parts, of sizes one, three and three — seven vertices in all — and two vertices
+are adjacent exactly when they lie in different parts. -/
+abbrev K133 := SimpleGraph.completeMultipartiteGraph fun i : Fin 3 => Fin (![1, 3, 3] i)
 
-/-- Any two distinct elements of `{2, 3, 5}` are coprime. -/
-def SmallPrimesCoprime : Prop :=
-  ∀ a ∈ ({2, 3, 5} : Finset ℕ), ∀ b ∈ ({2, 3, 5} : Finset ℕ), a ≠ b → Nat.Coprime a b
+/-- `G` admits a unit-distance representation in `ℝⁿ`: an injective placement of its vertices
+sending every **edge** to a pair of points at distance one.
 
-/-- Dropping membership of the first element leaves a false statement: `4` and `2` are distinct,
-`2` lies in the set, and they are not coprime. -/
-def SmallPrimesCoprime.drop1 : Prop :=
-  ¬ ∀ a : ℕ, ∀ b ∈ ({2, 3, 5} : Finset ℕ), a ≠ b → Nat.Coprime a b
+Non-adjacent vertices are unconstrained, so this is a unit-distance *representation* and not the
+stricter notion of a unit-distance *graph*, where distance one would force adjacency. The source
+claim asks only that every edge be a unit segment, so the weaker reading is the faithful one;
+`UnitDistanceEmbeddable.separating` exhibits the difference. -/
+def UnitDistanceEmbeddable {V : Type*} (G : SimpleGraph V) (n : ℕ) : Prop :=
+  ∃ f : V → EuclideanSpace ℝ (Fin n), Function.Injective f ∧
+    ∀ u v : V, G.Adj u v → dist (f u) (f v) = 1
 
-/-- Dropping membership of the second element leaves a false statement: `2` and `4` are distinct,
-`2` lies in the set, and they are not coprime. -/
-def SmallPrimesCoprime.drop3 : Prop :=
-  ¬ ∀ a ∈ ({2, 3, 5} : Finset ℕ), ∀ b : ℕ, a ≠ b → Nat.Coprime a b
+/-- Separating example for `UnitDistanceEmbeddable`, required by `lake exe fidelity`.
 
-/-- Dropping distinctness leaves a false statement: `2` is in the set and not coprime to itself. -/
-def SmallPrimesCoprime.drop4 : Prop :=
-  ¬ ∀ a ∈ ({2, 3, 5} : Finset ℕ), ∀ b ∈ ({2, 3, 5} : Finset ℕ), Nat.Coprime a b
+The nearest plausible wrong definition adds `∀ u v, dist (f u) (f v) = 1 → G.Adj u v`, turning a
+representation into a unit-distance graph. This exhibits a placement that satisfies the definition
+as written while putting a **non-edge** at distance one, so the definition demonstrably does not
+constrain non-adjacent vertices. Without it a development could silently prove the stricter
+theorem, which is a different and stronger claim than the source makes.
 
-/-- Satisfiability witness for `SmallPrimesCoprime`, required by `lake exe fidelity`.
+An edge plus a third vertex in `ℝ¹` does it: send the edge to `0, 1` and the third vertex to `2`.
+Every edge is a unit segment and the non-edge between the second and third vertices is also a unit
+segment.
 
-A claim whose hypotheses cannot be jointly satisfied is vacuously true, and vacuous truth passes
-`lake build`, `lake exe axioms`, and Comparator alike. This asserts that `PairwiseCoprime` holds
-of a set with more than one element, and that `SmallPrimesCoprime` itself holds, so the claim
-constrains something that exists. A witness taking the empty set would meet the letter of the
-obligation and none of its purpose, which is why the cardinality bound is part of the statement. -/
-def SmallPrimesCoprime.witness : Prop :=
-  ∃ S : Finset ℕ, PairwiseCoprime S ∧ 1 < S.card ∧ SmallPrimesCoprime
+An earlier version of this asserted instead that **no** placement satisfies the stricter reading.
+That was wrong, and an adversarial review kernel-checked the refutation: placing the third vertex
+at `3` instead satisfies the stricter reading too. Non-existence of a strict placement is a much
+stronger and harder claim, and it is not what separating the definitions requires. -/
+def UnitDistanceEmbeddable.separating : Prop :=
+  ∃ (V : Type) (G : SimpleGraph V) (n : ℕ) (f : V → EuclideanSpace ℝ (Fin n)),
+    UnitDistanceEmbeddable G n ∧
+      Function.Injective f ∧ (∀ u v : V, G.Adj u v → dist (f u) (f v) = 1) ∧
+        ∃ u v : V, u ≠ v ∧ ¬ G.Adj u v ∧ dist (f u) (f v) = 1
+
+/-- `G` has dimension `n`: the least `m` admitting a unit-distance representation of `G` in `ℝᵐ`.
+
+`IsLeast` carries both halves — `G` is representable in `ℝⁿ`, and in no smaller space. Weakening
+this to mere representability in `ℝ⁵` would make the claims below false: the single edge `K₂` is
+representable in `ℝ⁵`, so the least edge count would be one, not fifteen. -/
+def HasDimension {V : Type*} (G : SimpleGraph V) (n : ℕ) : Prop :=
+  IsLeast {m | UnitDistanceEmbeddable G m} n
+
+/-- Separating example for `HasDimension`, required by `lake exe fidelity`.
+
+The nearest plausible wrong definition is membership in place of leastness: `G` is representable
+in `ℝⁿ`. This asserts a graph representable in `ℝ⁴` that does not have dimension four, separating
+the two.
+
+The edge is required because without it the empty graph satisfies this degenerately — it is
+representable in every dimension and has dimension zero — which an adversarial review
+kernel-checked. A separating example that only the empty object witnesses establishes nothing
+about the definition, so this demands a graph with an edge. `K₂` is the intended witness:
+representable in `ℝ⁴`, of dimension one. -/
+def HasDimension.separating : Prop :=
+  ∃ (V : Type) (G : SimpleGraph V),
+    (∃ u v : V, G.Adj u v) ∧ UnitDistanceEmbeddable G 4 ∧ ¬ HasDimension G 4
+
+/-- Separating example for `K133`, required by `lake exe fidelity`.
+
+The nearest plausible wrong reading of `K₁,₃,₃` is the complete graph on the same seven vertices:
+Mathlib builds `completeMultipartiteGraph` as the complete graph pulled back along the part
+index, and dropping the pullback leaves every pair of vertices adjacent. This asserts two distinct
+`K₁,₃,₃` vertices that are not adjacent — take both from the second part — which the complete
+graph on the same vertex set does not have. -/
+def K133.separating : Prop :=
+  ∃ u v : Σ i : Fin 3, Fin (![1, 3, 3] i), u ≠ v ∧ ¬ K133.Adj u v
+
+/-- **Erdős problem 1007, dimension five.** The least number of edges of a graph of dimension
+five is fifteen.
+
+`IsLeast` carries both halves: some graph of dimension five has fifteen edges, and no graph with
+fewer edges has dimension five. `DimensionFive.witness` asserts the first half separately, and
+`DimensionFiveExtremal` names the two graphs that attain it. -/
+def DimensionFive : Prop :=
+  IsLeast {m | ∃ (n : ℕ) (G : SimpleGraph (Fin n)), HasDimension G 5 ∧ G.edgeSet.ncard = m} 15
+
+/-- Satisfiability witness for `DimensionFive`, required by `lake exe fidelity`.
+
+The claim is closed, so vacuity cannot come from unsatisfiable hypotheses; it would come from the
+set being empty at fifteen. This asserts that fifteen belongs to the set — some graph of dimension
+five with exactly fifteen edges exists. Discharging it is the attainment half of Chaffee and
+Noble's result: `K₆` and `K₁,₃,₃` are such graphs. -/
+def DimensionFive.witness : Prop :=
+  ∃ (n : ℕ) (G : SimpleGraph (Fin n)), HasDimension G 5 ∧ G.edgeSet.ncard = 15
+
+/-- **Erdős problem 1007, extremal half for dimension five.** Fifteen edges are attained by both
+`K₆` and `K₁,₃,₃`: each has dimension five and exactly fifteen edges. -/
+def DimensionFiveExtremal : Prop :=
+  (HasDimension (SimpleGraph.completeGraph (Fin 6)) 5 ∧
+      (SimpleGraph.completeGraph (Fin 6)).edgeSet.ncard = 15) ∧
+    (HasDimension K133 5 ∧ K133.edgeSet.ncard = 15)
+
+/-- Satisfiability witness for `DimensionFiveExtremal`, required by `lake exe fidelity`.
+
+The claim is a conjunction about two named graphs, and it would be degenerate if the two names
+denoted the same object: attainment by `K₆` and `K₁,₃,₃` would then mention one graph twice. This
+asserts that the two graphs are not even isomorphic — six vertices against seven — so the
+conjunction records attainment by two genuinely distinct graphs. -/
+def DimensionFiveExtremal.witness : Prop :=
+  ¬ Nonempty (SimpleGraph.completeGraph (Fin 6) ≃g K133)
 
 end Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5
 
 /-!
 ## Formal proof
 
-Proved in `InlineErdos1007Dim5Proof`.
+To be proved in `InlineErdos1007Dim5Proof`, which does not exist yet: every line below names an
+obligation of the coming proof module, not a theorem.
 
 * `separating` → `separating.proof`
-* `SmallPrimesCoprime` → `SmallPrimesCoprime.proof`
-* `drop1` → `drop1.proof`
-* `drop3` → `drop3.proof`
-* `drop4` → `drop4.proof`
+* `K133.separating` → `K133.separating.proof`
+* `DimensionFive` → `DimensionFive.proof`
+* `DimensionFiveExtremal` → `DimensionFiveExtremal.proof`
 * `witness` → `witness.proof`
 -/

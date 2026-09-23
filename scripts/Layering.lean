@@ -53,7 +53,8 @@ private def generalRoots : Array Name := #[
 /-- The project's own mathematical spine, ordered earliest stage first. A module in stage `i`
 may import stage `j` only when `j ≤ i`. Edit this when the spine changes. -/
 private def subjectRoots : Array (Name × String) := #[
-  -- (`Erdos1007Dim5.YourSubject`, "your subject"),
+  (`Erdos1007Dim5.Geometry, "unit-distance geometry"),
+  (`Erdos1007Dim5.Extremal, "extremal graph theory"),
 ]
 
 private def leafRoots : Array Name := #[

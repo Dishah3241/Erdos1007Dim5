@@ -2,9 +2,11 @@
 namespace Erdos1007Dim5.Palomar
 
 set_option warningAsError false in
-/-- Any two distinct elements of `{2, 3, 5}` are coprime. -/
+/-- The least number of edges of a graph of dimension five is fifteen, attained by `K₆` and
+`K₁,₃,₃`. -/
 theorem target :
-    Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5.SmallPrimesCoprime := by
+    Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5.DimensionFive ∧
+      Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5.DimensionFiveExtremal := by
   sorry
 
 end Erdos1007Dim5.Palomar
