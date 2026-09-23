@@ -53,7 +53,11 @@ private def moduleIsOptedIn (name : Name) : IO (Option Bool) := do
   return some isModule
 
 public def main : IO UInt32 := do
+  -- This package and `GraphDimension` both build `scripts/*.olean`. `findOLean` stops at the
+  -- first search-path root that contains a `scripts` directory, which is the dependency, so the
+  -- local build has to come first.
   initSearchPath (← findSysroot)
+    [(← IO.currentDir) / ".lake" / "build" / "lib" / "lean"]
   let modules ← auditedModules
   let mut violations := #[]
   for name in modules do

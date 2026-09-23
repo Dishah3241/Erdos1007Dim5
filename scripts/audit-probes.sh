@@ -219,6 +219,17 @@ LEAN
 probe "standalone-rejects-project-import" "Probe" \
   bash -c 'lake build 2>/dev/null; lake exe standalone-mathlib'
 
+# A project file that does not opt into the module system must be named. This also guards the
+# search-path order in scripts/ModuleSystem.lean: with a dependency that builds its own
+# `scripts/*.olean` (GraphDimension), the audit must still read this package's build.
+setup_scratch
+mkdir -p "$SCRATCH/tree/$PROJECT/Standalone/Mathlib/Support"
+cat > "$SCRATCH/tree/$PROJECT/Standalone/Mathlib/Support/ProbeNotModule.lean" <<LEAN
+theorem probe_not_module : True := trivial
+LEAN
+probe "module-system-rejects-plain-file" "ProbeNotModule" \
+  bash -c 'lake build 2>/dev/null; lake exe module-system'
+
 echo
 echo "audit-probes: $PASSED passed, $FAILED failed"
 [[ $FAILED -eq 0 ]] || exit 1
