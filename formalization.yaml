@@ -1,10 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/v0.4.schema.json
-# formalization.yaml v0.4, written to Palomar's stricter rules. Before submitting:
-# - replace every {{…}};
-# - validate against the v0.4 schema and Palomar's own loader;
-# - take every model name from a run log, never from memory.
-# Worked example: projects/Erdos1007/formalization.yaml.
-# Rules and commands: the Math workspace's docs/research/2026-09-22-palomar-submission-path.md.
+# formalization.yaml v0.4, written to Palomar's stricter rules. Validate it against the v0.4
+# schema and Palomar's own loader after every edit, and take every model name from a run log.
 version: "v0.4"
 
 project:
@@ -14,7 +10,17 @@ project:
   description: >-
     The least number of edges of a graph of Euclidean dimension five (Erdős–Harary–Tutte) is 15,
     and both K6 and K1,3,3 attain it (Chaffee and Noble 2016). These are formal-conjectures'
-    erdos_1007.variants.dimension_five and dimension_five_extremal. {{ABSTRACT_DETAIL}}
+    erdos_1007.variants.dimension_five and dimension_five_extremal. A graph has dimension n when n
+    is the least dimension in which its vertices can be placed injectively with every edge a unit
+    segment. The lower bound is Chaffee and Noble's Theorem 10: every graph with at most fourteen
+    edges has such a placement in ℝ⁴. Its proof removes a vertex of degree at most three, joins
+    that vertex's neighbours to one another, places the smaller graph by induction, and returns the
+    vertex to one of the infinitely many points at distance one from its neighbours. A graph whose
+    degrees are all at least four has at most seven vertices, and those graphs are handled case by
+    case. For attainment, K6 has dimension five because six points at pairwise distance one fit in
+    ℝ⁵ but not in ℝ⁴. K1,3,3 has dimension five by Theorem 8: it has an explicit placement in ℝ⁵,
+    and an orthogonal-complement count rules out ℝ⁴. The supporting results are in GraphDimension,
+    a separate Lean library on the dimension of graphs, which this repository pins by revision.
   authors:                 # humans only; credit models under `automation`
     - "Dishant Shah"
   responsible_maintainers:
@@ -23,7 +29,7 @@ project:
 
 classification:            # one to eight codes from Palomar's taxonomy snapshots
   arxiv: ["math.CO", "math.MG"]
-  msc2020: ["05C62", "52C10"]  # recheck against Palomar's taxonomy snapshot before submitting
+  msc2020: ["05C62", "52C10"]  # the codes Palomar accepted for PALOMAR-2026-09-23-000003
 
 # `type` is one of paper, book, web discussion, folklore, original-proof or other. At least one
 # source must formalize, adapt or independently prove the result, which makes it source-based.
@@ -65,27 +71,151 @@ status:
 
 fidelity:
   divergences: >-
-    {{DIVERGENCES}}
+    None in meaning. The statements are formal-conjectures' erdos_1007.variants.dimension_five and
+    erdos_1007.variants.dimension_five_extremal, with their supporting definitions inlined
+    (UnitDistanceEmbeddable, HasDimension and K133) and the ℝ^n notation written out as
+    EuclideanSpace ℝ (Fin n). With both builds loaded together, each inlined statement equals the
+    upstream declaration's type by rfl. A model of a different lineage from the one that wrote the
+    statements ran that check (docs/upstream-check-stage1.md). Both proofs also elaborate against
+    upstream's declaration types in one environment (docs/upstream-check-2026-09-23.md). The proof
+    works with the library's copies of the two definitions, which have the same bodies, and rfl
+    identifies them (docs/review-2026-09-23.md, check 2). Neither statement has a hypothesis, so
+    there is none to drop. Kernel-checked separating examples show that each definition differs
+    from its nearest plausible misreading, and satisfiability witnesses show that neither claim is
+    vacuous.
 
 automation:
   # One entry per phase. `method` is manual, copilot, agent, autonomous or other. Only 3 of
   # Palomar's first 36 entries disclosed AI assistance; this workspace discloses it every time.
   methods:
     - method: "agent"
-      models: ["{{MODEL_FROM_RUN_LOG}}"]
-      framework: "{{HARNESS_AND_VERSION}}"
+      models: ["glm-5.3-flash"]
+      framework: "pi coding agent 0.85.1"
       tool_setup: >-
-        {{PHASE}}: what this phase produced, and its run ids.
+        Target selection. Four read-only surveys of candidate problems and one of the formalization
+        landscape (runs 20260922-204626-87679cb1, 20260922-204626-f0a4076e,
+        20260922-204627-01c8974c, 20260922-204627-54ec8fdc and 20260922-204628-0bdb5127). A Claude
+        manager recommended this problem from them, and the owner chose it.
+    - method: "agent"
+      models: ["glm-5.3-flash", "grok-4.7-build"]
+      framework: "pi coding agent 0.85.1; Grok CLI 1.0.41"
+      tool_setup: >-
+        Statement. A pi worker reproduced both upstream statements with their definitions inlined,
+        and wrote the separating examples and satisfiability witnesses that the fidelity audit
+        requires (run 20260922-214005-54eb173a). A Grok worker, of a different model lineage, then
+        checked the inlined statements against upstream by rfl and looked for weakenings (run
+        20260922-221924-4ec70708).
+    - method: "agent"
+      models: ["grok-4.7-build", "glm-5.3-flash", "Grok 4.7 500K Extra High Fast"]
+      framework: "Grok CLI 1.0.41; pi coding agent 0.85.1; Cursor Agent 2026.09.18-9a7762b"
+      tool_setup: >-
+        Library and proof. A Claude manager split the blueprint into leaves and dispatched each to
+        one worker in a disposable git worktree. A Grok worker seeded the GraphDimension library
+        from the first rung's code, and Grok, pi and Cursor workers proved its lemmas. Cursor
+        workers proved Chaffee and Noble's Theorem 8 and Theorem 10, each after winning a race
+        against a pi worker on the same brief. In this repository a pi worker proved attainment,
+        and a Cursor worker proved dimension_five from Theorem 10. Cursor reports its model by the
+        display name given above. Five other runs contributed nothing: two Grok runs that failed on
+        an exhausted balance, the two race losers, and a Cursor run stopped by mistake.
+      cost:
+        wall_time: "about four and a half hours, overnight from 2026-09-22 to 2026-09-23"
+        hardware: "one Mac mini; hosted models on subscription plans"
+    - method: "agent"
+      models: ["claude-opus-5-5"]
+      framework: "Claude Code 2.1.280"
+      tool_setup: >-
+        Management, review and release. The manager planned the proof as a blueprint, dispatched
+        every run above, re-ran the kernel checks before landing each change, ran Comparator with
+        the NanoDa kernel, and pinned the library. A separate Claude worker reviewed the finished
+        proof independently and read-only (run 20260923-085901-d7acda35). A second Claude session
+        prepared this metadata.
+      prompting_notes: >-
+        Every worker received a written brief: the workspace's shared preamble, a goal, and the
+        commands that decide acceptance, including the build, the audits and #print axioms.
+        Workers never committed or pushed. Each returned what it changed, what it verified, its
+        assumptions and what it left undone, and the manager re-ran the checks before landing any
+        change. The briefs live in the private workspace repository.
   spend_usd: "subscription-based usage"
   notes: >-
-    {{PROCESS}}: who chose the target, who signed off the statement's meaning, and what a human
-    actually read.
+    The owner chose the target and approved publishing this repository and the library; the owner
+    wrote no Lean. Every Lean change reached these repositories through a manager that re-ran the
+    kernel checks. The model names above are taken from the run logs with the workspace's
+    harness/run-model, and the harness versions from the installed tools, which predate every run.
 
 limitations: >-
-  {{LIMITATIONS}}
+  The theorems are exactly the two upstream statements. That K6 and K1,3,3 are the only
+  fifteen-edge graphs of dimension five (Chaffee and Noble's Theorem 11) is not stated here.
+  Problem 1007 itself concerns dimension four, and its extremal half is a separate formalization
+  (PALOMAR-2026-09-23-000003). The proof depends on the GraphDimension library, which Lake fetches
+  at the revision pinned in lake-manifest.json. Comparator was run locally without its Linux
+  sandbox, which Palomar supplies on submission.
 
 review:
-  status: "{{REVIEW_STATUS}}"    # unchecked, agent-reviewed, self-assessed, peer-reviewed or author-verified
-  reviewers: []
+  status: "agent-reviewed"
+  reviewers:
+    - "grok-4.7-build (Grok CLI): independent check of the statements against upstream, by rfl"
+    - "claude-opus-5-5 (Claude Code): independent review of the proof"
   notes: >-
-    {{REVIEW_NOTES}}
+    Kernel-checked from a fresh clone of this repository, with the library fetched from GitHub at
+    its pinned revision: lake build with warnings as errors; lake exe axioms (only propext,
+    Classical.choice and Quot.sound); the fidelity battery of separating examples and
+    satisfiability witnesses; the module-system, layering, standalone-mathlib, proof-links, style,
+    documentation and palomar-compatibility audits; the Challenge check; Mathlib's environment
+    linters; leanblueprint checkdecls; and scripts/audit-probes.sh, which confirms that each audit
+    rejects what it should (10 of 10). Comparator accepted Solution against Challenge with both the
+    Lean kernel and NanoDa (docs/comparator-2026-09-23.md). The review found nothing that blocks
+    the proof. It asked for this file's placeholders to be filled and for one dependency in the
+    blueprint to be corrected, and both are done; it also noted a heartbeat option in a library
+    module that the proof does not import (docs/review-2026-09-23.md). No independent human has
+    reviewed the proof. Its correctness rests on the kernel checks above, and the statements'
+    meaning on the reviews listed here.
+
+alignment:
+  # Declarations in this repository, then the library results they use. Library modules are paths
+  # inside GraphDimension, which Lake fetches at the revision pinned in lake-manifest.json.
+  statements:
+    - source: "Chaffee–Noble 2016, Theorem 10, as a least edge count: fifteen is the least number of edges of a graph of dimension five"
+      lean: "Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5.DimensionFive.proof"
+      module: "Erdos1007Dim5/Standalone/Mathlib/InlineErdos1007Dim5Proof.lean"
+      status: "proved"
+      note: "Restated for Comparator, with the next entry, as Erdos1007Dim5.Palomar.target in Solution.lean."
+    - source: "K6 and K1,3,3 each have dimension five and fifteen edges (Chaffee–Noble Lemma 1 at n = 6, and Theorem 8)"
+      lean: "Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5.DimensionFiveExtremal.proof"
+      module: "Erdos1007Dim5/Standalone/Mathlib/InlineErdos1007Dim5Proof.lean"
+      status: "proved"
+      note: "Attainment only. Theorem 11, that no other graph attains fifteen, is not formalized."
+    - source: "Chaffee–Noble 2016, Theorem 10: every graph with at most fourteen edges has a unit-distance representation in ℝ⁴"
+      lean: "SimpleGraph.unitDistEmbeddable_four_of_ncard_edgeSet_le"
+      module: "GraphDimension/Extremal/FourteenEdges.lean"
+      status: "proved"
+      note: "Stated for any finite vertex type, which is stronger than the statement needs."
+    - source: "Chaffee–Noble 2016, Theorem 8: K1,3,3 has dimension five"
+      lean: "SimpleGraph.hasUnitDistDim_K133"
+      module: "GraphDimension/Geometry/K133.lean"
+      status: "proved"
+      note: "The lower bound is an orthogonal-complement count in place of the paper's circumcentre argument; the upper bound is an explicit placement."
+    - source: "Chaffee–Noble 2016, Lemma 9: K1,2,2,2 and K2,2,2,2 have dimension four"
+      lean: "SimpleGraph.hasUnitDistDim_completeMultipartiteGraph_one_two_two_two"
+      module: "GraphDimension/Geometry/Cocktail.lean"
+      status: "proved"
+      note: "Theorem 10 uses K1,2,2,2 only; hasUnitDistDim_completeMultipartiteGraph_two_two_two_two proves the other half."
+    - source: "Chaffee–Noble 2016, Lemma 1 (Erdős–Harary–Tutte): K_n has dimension n − 1"
+      lean: "SimpleGraph.hasUnitDistDim_completeGraph"
+      module: "GraphDimension/Geometry/CompleteGraph.lean"
+      status: "proved"
+    - source: "Chaffee–Noble 2016, Lemma 2: K_n minus an edge has dimension n − 2"
+      lean: "SimpleGraph.hasUnitDistDim_completeGraph_deleteEdge"
+      module: "GraphDimension/Geometry/CompleteMinusEdgeDimension.lean"
+      status: "proved"
+    - source: "Re-attaching a vertex whose neighbours form a clique of k points, when k + 1 ≤ d (the argument of Chaffee–Noble Theorem 10)"
+      lean: "SimpleGraph.UnitDistEmbeddable.extend"
+      module: "GraphDimension/Geometry/Extend.lean"
+      status: "proved"
+    - source: "The complement of a four-regular graph on seven vertices has three pairwise disjoint edges (used in Chaffee–Noble Theorem 10)"
+      lean: "SimpleGraph.exists_three_pairwise_disjoint_edges_compl"
+      module: "GraphDimension/Combinatorics/SimpleGraph/TwoRegularSeven.lean"
+      status: "proved"
+
+acknowledgements: >-
+  Built on Mathlib. The statements come from google-deepmind/formal-conjectures. Comparator,
+  lean4export and the NanoDa kernel checked the proof; leanblueprint renders the blueprint.

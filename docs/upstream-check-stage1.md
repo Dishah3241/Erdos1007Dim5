@@ -11,6 +11,9 @@ The inlining is commit `458466e8d4b316509a0ac68e2de99fc0296191cd`. This check wa
 factory run `20260922-221924-4ec70708`. `harness/run-model` reports that run's model as
 not evidenced (the log has no final result event).
 
+**Correction, 2026-09-23.** The log does end with a result event. Its `modelUsage` names
+`grok-4.7-build`, and `harness/run-model` now reports that model.
+
 ## Pins
 
 - **`formal-conjectures` statement pin** `2a46c7bd74505b85f4967475bb733ded0ef8d348`, the commit
