@@ -1,0 +1,91 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/v0.4.schema.json
+# formalization.yaml v0.4, written to Palomar's stricter rules. Before submitting:
+# - replace every {{…}};
+# - validate against the v0.4 schema and Palomar's own loader;
+# - take every model name from a run log, never from memory.
+# Worked example: projects/Erdos1007/formalization.yaml.
+# Rules and commands: the Math workspace's docs/research/2026-09-22-palomar-submission-path.md.
+version: "v0.4"
+
+project:
+  name: "Erdős 1007, dimension five: fifteen edges, attained by K6 and K1,3,3"
+  # The registry abstract, at most 10,000 characters: the mathematical content and the principal
+  # results, readable without the repository.
+  description: >-
+    The least number of edges of a graph of Euclidean dimension five (Erdős–Harary–Tutte) is 15,
+    and both K6 and K1,3,3 attain it (Chaffee and Noble 2016). These are formal-conjectures'
+    erdos_1007.variants.dimension_five and dimension_five_extremal. {{ABSTRACT_DETAIL}}
+  authors:                 # humans only; credit models under `automation`
+    - "Dishant Shah"
+  responsible_maintainers:
+    - "Dishant Shah"
+  license: "Apache-2.0"    # must match the root LICENSE exactly
+
+classification:            # one to eight codes from Palomar's taxonomy snapshots
+  arxiv: ["math.CO", "math.MG"]
+  msc2020: ["05C62", "52C10"]  # recheck against Palomar's taxonomy snapshot before submitting
+
+# `type` is one of paper, book, web discussion, folklore, original-proof or other. At least one
+# source must formalize, adapt or independently prove the result, which makes it source-based.
+sources:
+  - title: "Dimension 4 and dimension 5 graphs with minimum edge set"
+    authors:
+      - "Joe Chaffee"
+      - "Matt Noble"
+    id: "https://ajc.maths.uq.edu.au/pdf/64/ajc_v64_p327.pdf"
+    type: "paper"
+    location: "Australas. J. Combin. 64(2) (2016) 327–333, Theorem 8, Lemma 9 and Theorem 10"
+    relationship: "formalizes"
+    author_endorsement: "not-contacted"
+    note: >-
+      The proof of record, cited at its exact pinpoint.
+
+# Prior or parallel formalizations. When the statement came from formal-conjectures, that
+# repository belongs here, pinned to a commit.
+related_formalizations:
+  - id: "https://github.com/google-deepmind/formal-conjectures/blob/2a46c7bd74505b85f4967475bb733ded0ef8d348/FormalConjectures/ErdosProblems/1007.lean"
+    relationship: "builds-on"
+    note: >-
+      The formal statement is this file's erdos_1007.variants.dimension_five and erdos_1007.variants.dimension_five_extremal, reproduced with its supporting
+      definitions inlined so that it depends on Mathlib alone.
+
+status:
+  scope: >-
+    Only the two upstream statements. Chaffee and Noble's Theorem 11, that K6 and K1,3,3 are the
+    only extremal graphs, is out of scope (finding A2 in the Math workspace).
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  main_results:
+    - declaration: "Erdos1007Dim5.Palomar.target"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+
+fidelity:
+  divergences: >-
+    {{DIVERGENCES}}
+
+automation:
+  # One entry per phase. `method` is manual, copilot, agent, autonomous or other. Only 3 of
+  # Palomar's first 36 entries disclosed AI assistance; this workspace discloses it every time.
+  methods:
+    - method: "agent"
+      models: ["{{MODEL_FROM_RUN_LOG}}"]
+      framework: "{{HARNESS_AND_VERSION}}"
+      tool_setup: >-
+        {{PHASE}}: what this phase produced, and its run ids.
+  spend_usd: "subscription-based usage"
+  notes: >-
+    {{PROCESS}}: who chose the target, who signed off the statement's meaning, and what a human
+    actually read.
+
+limitations: >-
+  {{LIMITATIONS}}
+
+review:
+  status: "{{REVIEW_STATUS}}"    # unchecked, agent-reviewed, self-assessed, peer-reviewed or author-verified
+  reviewers: []
+  notes: >-
+    {{REVIEW_NOTES}}

@@ -1,0 +1,35 @@
+{
+  "enabledMcpjsonServers": ["lean-lsp"],
+  "permissions": {
+    "allow": [
+      "Bash(~/.elan/bin/lake *)",
+      "Bash(~/.elan/bin/lake:*)",
+      "Bash(lake *)",
+      "Bash(lake:*)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(sed -n *)",
+      "Bash(mkdir -p tmp*)",
+      "Bash(rm tmp/*)",
+      "Bash(rm -f tmp/*)",
+      "Bash(~/Code/Math/harness/kb/mkb *)",
+      "Read(~/Code/Math/AGENTS.md)",
+      "Read(~/Code/Math/docs/**)",
+      "mcp__lean-lsp",
+      "mcp__mkb"
+    ],
+    "deny": [
+      "Bash(git push *)",
+      "Bash(git commit *)",
+      "Read(~/src/lean-proofs/**)"
+    ]
+  }
+}

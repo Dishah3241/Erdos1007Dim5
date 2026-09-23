@@ -1,0 +1,10 @@
+
+namespace Erdos1007Dim5.Palomar
+
+set_option warningAsError false in
+/-- Any two distinct elements of `{2, 3, 5}` are coprime. -/
+theorem target :
+    Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5.SmallPrimesCoprime := by
+  sorry
+
+end Erdos1007Dim5.Palomar

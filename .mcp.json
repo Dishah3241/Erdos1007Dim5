@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "lean-lsp": {
+      "command": "uvx",
+      "args": ["lean-lsp-mcp"],
+      "env": {
+        "LEAN_LOG_LEVEL": "ERROR"
+      }
+    },
+    "mkb": {
+      "command": "sh",
+      "args": ["-c", "exec python3 \"$HOME/Code/Math/harness/kb/mkb\" mcp"]
+    }
+  }
+}
