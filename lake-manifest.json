@@ -3,12 +3,15 @@
  "packagesDir": ".lake/packages",
  "packages": [
   {
-   "type": "path",
+   "url": "https://github.com/Dishah3241/GraphDimension",
+   "type": "git",
+   "subDir": null,
    "scope": "",
+   "rev": "2e798b7281bf44ae7fdc65fa50039e7cd2973a44",
    "name": "GraphDimension",
    "manifestFile": "lake-manifest.json",
+   "inputRev": "2e798b7281bf44ae7fdc65fa50039e7cd2973a44",
    "inherited": false,
-   "dir": "../GraphDimension",
    "configFile": "lakefile.toml"
   },
   {

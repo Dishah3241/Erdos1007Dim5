@@ -87,7 +87,7 @@ Mathlib and `FormalConjectures` come from `lake env`; this repository is not a d
 the fork.
 
 ```sh
-cd /Users/dishant/src/formal-conjectures-fork && ~/.elan/bin/lake env sh -c 'LEAN_PATH="$LEAN_PATH:/Users/dishant/.treehouse/Erdos1007Dim5-f64781/1/Erdos1007Dim5/.lake/build/lib/lean" lean /Users/dishant/.treehouse/Erdos1007Dim5-f64781/1/Erdos1007Dim5/tmp/Check.lean'
+cd ~/src/formal-conjectures-fork && ~/.elan/bin/lake env sh -c 'LEAN_PATH="$LEAN_PATH:$E/.lake/build/lib/lean" lean $E/tmp/Check.lean'   # E: this repository's checkout
 ```
 
 ## Result
