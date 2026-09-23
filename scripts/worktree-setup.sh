@@ -16,6 +16,21 @@ if [[ "$primary" == "$root" ]]; then
   exit 0
 fi
 
+# Sibling path dependencies (`path = "../Name"` in lakefile.toml) resolve against the checkout's
+# parent directory. A worktree's parent is the treehouse pool, so link each one from the primary's.
+while IFS= read -r sibling; do
+  [[ -n "$sibling" ]] || continue
+  if [[ ! -e "$root/../$sibling" ]]; then
+    if [[ -d "$primary/../$sibling" ]]; then
+      ln -s "$(cd "$primary/../$sibling" && pwd -P)" "$root/../$sibling"
+      echo "worktree-setup: linked ../$sibling"
+    else
+      echo "worktree-setup: path dependency ../$sibling is missing next to the primary checkout" >&2
+      exit 1
+    fi
+  fi
+done < <(sed -n 's/^path = "\.\.\/\([^"/]*\)".*/\1/p' "$root/lakefile.toml")
+
 source_packages="$primary/.lake/packages"
 if [[ ! -d "$source_packages" ]]; then
   echo "worktree-setup: $source_packages is missing; build the primary checkout first" >&2

@@ -96,6 +96,13 @@ root = "scripts.Layering"
 # `leanblueprint checkdecls` runs this to verify every `\lean{...}` in blueprint/src/content.tex
 # names a declaration that actually exists. It is the drift protection the inline-annotation
 # approach gets for free and a LaTeX blueprint does not.
+# The shared graph-dimension library (Math ADR 0004, ROADMAP P2). A sibling path dependency while
+# both repositories are local; it becomes a git dependency pinned to a 40-character revision before
+# this repository is published. scripts/worktree-setup.sh links it into worktrees.
+[[require]]
+name = "GraphDimension"
+path = "../GraphDimension"
+
 [[require]]
 name = "checkdecls"
 git = "https://github.com/PatrickMassot/checkdecls.git"
