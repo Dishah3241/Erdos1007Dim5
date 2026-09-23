@@ -150,11 +150,9 @@ end Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5
 /-!
 ## Formal proof
 
-To be proved in `InlineErdos1007Dim5Proof`, which does not exist yet: every line below names an
-obligation of the coming proof module, not a theorem.
+Proved in `InlineErdos1007Dim5Proof`.
 
 * `separating` → `separating.proof`
-* `K133.separating` → `K133.separating.proof`
 * `DimensionFive` → `DimensionFive.proof`
 * `DimensionFiveExtremal` → `DimensionFiveExtremal.proof`
 * `witness` → `witness.proof`

@@ -5,17 +5,19 @@ Authors: Dishant Shah
 -/
 module
 
-public import Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5
+public import Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5Proof
 
 /-!
 # Erdős 1007, dimension five: fifteen edges, attained by K6 and K1,3,3
 
 Connects Palomar's advertised declaration to the proof. This module contains no mathematics: it
-restates the theorem Comparator checks.
+restates the theorem Comparator checks and discharges it from the development as far as it is
+proved.
 
 The statement here must match `Challenge.lean`'s. Comparator compiles the two modules in separate
-sandboxes and rejects any difference. Until the proof exists, `target` carries the same advertised
-hole as `Challenge.lean`'s; when the proof module lands, the hole is replaced by its theorems.
+sandboxes and rejects any difference. The extremal conjunct is discharged from
+`InlineErdos1007Dim5Proof`; the attainment half, the lower bound of Chaffee and Noble's
+Theorem 10, remains the advertised hole.
 -/
 
 public section
@@ -28,6 +30,7 @@ set_option warningAsError false in
 theorem target :
     Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5.DimensionFive ∧
       Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5.DimensionFiveExtremal := by
+  refine ⟨?_, Erdos1007Dim5.Standalone.Mathlib.InlineErdos1007Dim5.DimensionFiveExtremal.proof⟩
   sorry
 
 end Erdos1007Dim5.Palomar

@@ -40,6 +40,15 @@ setup_scratch() {
   if [[ -d "$REPO_ROOT/.lake/packages" ]]; then
     ln -s "$REPO_ROOT/.lake/packages" "$SCRATCH/tree/.lake/packages"
   fi
+  # Sibling path dependencies (`path = "../Name"` in lakefile.toml) resolve against the scratch
+  # tree's parent, as in a worktree; link each one from the checkout's parent, as
+  # scripts/worktree-setup.sh does.
+  while IFS= read -r sibling; do
+    [[ -n "$sibling" ]] || continue
+    if [[ -d "$REPO_ROOT/../$sibling" && ! -e "$SCRATCH/$sibling" ]]; then
+      ln -s "$(cd "$REPO_ROOT/../$sibling" && pwd -P)" "$SCRATCH/$sibling"
+    fi
+  done < <(sed -n 's/^path = "\.\.\/\([^"/]*\)".*/\1/p' "$REPO_ROOT/lakefile.toml")
   for f in "$REPO_ROOT"/.lake/*; do
     [[ -e "$f" ]] || continue
     case "$(basename "$f")" in
