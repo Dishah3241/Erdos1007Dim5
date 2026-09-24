@@ -17,7 +17,7 @@ dimension five has at least fifteen edges, and both `K₆` and `K₁,₃,₃` ha
 | Review | an independent, read-only review found nothing that blocks the proof ([record](docs/review-2026-09-23.md)) |
 | Blueprint | [web](https://dishah3241.github.io/Erdos1007Dim5/) and [PDF](https://dishah3241.github.io/Erdos1007Dim5/blueprint.pdf), built by CI from `blueprint/src/content.tex` and checked against the Lean by `leanblueprint checkdecls` |
 | `formal-conjectures` link | issue [#6519](https://github.com/google-deepmind/formal-conjectures/issues/6519) open; the pull request is prepared and held |
-| Palomar entry | resubmitted 2026-09-23 at `85032a4` on Lean `v4.35.0-rc2`, after the first submission at `7118d68` needed the newer toolchain; verification and review in progress ([record](docs/palomar-2026-09-23.md)) |
+| Palomar entry | resubmitted 2026-09-23 at `85032a4` on Lean `v4.35.0-rc2`; Palomar's verification passed and its review found no problems; registration requested 2026-09-23 23:06 UTC and not yet published ([record](docs/palomar-2026-09-23.md)) |
 
 ## Context
 
