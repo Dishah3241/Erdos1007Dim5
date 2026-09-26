@@ -16,8 +16,8 @@ dimension five has at least fifteen edges, and both `K₆` and `K₁,₃,₃` ha
 | Library | [GraphDimension](https://github.com/Dishah3241/GraphDimension), which Lake fetches at the revision pinned in `lake-manifest.json` |
 | Review | an independent, read-only review found nothing that blocks the proof ([record](docs/review-2026-09-23.md)) |
 | Blueprint | [web](https://dishah3241.github.io/Erdos1007Dim5/) and [PDF](https://dishah3241.github.io/Erdos1007Dim5/blueprint.pdf), built by CI from `blueprint/src/content.tex` and checked against the Lean by `leanblueprint checkdecls` |
-| `formal-conjectures` link | issue [#6519](https://github.com/google-deepmind/formal-conjectures/issues/6519) open; the pull request is prepared and held |
-| Palomar entry | resubmitted 2026-09-23 at `85032a4` on Lean `v4.35.0-rc2`; Palomar's verification passed and its review found no problems; registration requested 2026-09-23 23:06 UTC and not yet published ([record](docs/palomar-2026-09-23.md)) |
+| `formal-conjectures` link | issue [#6519](https://github.com/google-deepmind/formal-conjectures/issues/6519); pull request [#6623](https://github.com/google-deepmind/formal-conjectures/pull/6623), open, linking commit `7118d68` |
+| Palomar entry | [PALOMAR-2026-09-25-000003](https://palomar-registry.org/entry.html?id=PALOMAR-2026-09-25-000003&version=1), registered at commit `85032a4` on Lean `v4.35.0-rc2` ([record](docs/palomar-2026-09-23.md)) |
 
 ## Context
 
